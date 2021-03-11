@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Select item of your choice</h1>
+
+<p>Select the item from the drop-down list to get details of that item in JSON format</p>
+
+<form name="myform" onsubmit="return SetData()">
+  <label for="cars">Choose an item from the list :</label>
+  <select name="search" id="search">
+    <option value="Furniture">Furniture</option>
+    <option value="Shoes">Shoes</option>
+    <option value="Baby">Baby</option>
+    <option value="Beauty">Beauty</option>
+	<option value="Jewelry">Jewelry</option>
+	<option value="Electronics">Electronics</option>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+<label>Result of your input : </label>
+<div id="response"></div>
+<script>
+function SetData(){
+   var select = document.getElementById('search');
+   var agent_id = select.options[select.selectedIndex].value;
+   var url = "/commerce/categories";
+   //var url = "https://jsonplaceholder.typicode.com/todos/"+agent_id;
+   //document.myform.action =  myurl;
+   //myform.submit();
+   //alert(url);
+   
+   var xhttp = new XMLHttpRequest();
+   xhttp.open("GET", url+"?search="+agent_id, true);
+   xhttp.setRequestHeader("Content-Type", "application/json");
+   xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 && this.status == 200) {
+	   		console.log('myresponse', this.response); 
+            document.getElementById("response").innerHTML = this.response;
+            }
+    };
+    xhttp.send();
+	return false;
+}
+</script>
+</body>
+</html>
